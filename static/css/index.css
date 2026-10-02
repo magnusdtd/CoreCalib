@@ -239,16 +239,6 @@ body {
   background: #eef4fb;
 }
 
-.bibtex-wrapper {
-  position: relative;
-}
-
-.copy-bibtex {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-}
-
 @media screen and (max-width: 768px) {
   .publication-title.is-1 {
     font-size: 2rem;
