@@ -1,173 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
-  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+        content="CoreCalib: a training-free, quantizer-agnostic framework that builds compact, density-aware calibration sets for post-training quantization of medical vision-language models.">
+  <meta name="keywords" content="CoreCalib, post-training quantization, calibration data, medical VLM, medical VQA, Kvasir-VQA-x1, MASQuant, GPTQ, QIG, Qwen3.5">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nerfies: Deformable Neural Radiance Fields</title>
+  <title>CoreCalib: Density-Aware Calibration for Resource-Efficient Medical VLMs</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
+  <meta property="og:title" content="CoreCalib: Density-Aware Calibration for Resource-Efficient Medical VLMs">
+  <meta property="og:description" content="Compact, density-aware calibration sets for post-training quantization of medical vision-language models.">
+  <meta property="og:image" content="./static/images/fig_overview.jpg">
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
         rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="icon" href="./static/images/favicon.svg">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+  <script defer src="./static/js/index.js"></script>
 </head>
 <body>
-
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://keunhong.com">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://hypernerf.github.io">
-            HyperNeRF
-          </a>
-          <a class="navbar-item" href="https://nerfies.github.io">
-            Nerfies
-          </a>
-          <a class="navbar-item" href="https://latentfusion.github.io">
-            LatentFusion
-          </a>
-          <a class="navbar-item" href="https://photoshape.github.io">
-            PhotoShape
-          </a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</nav>
-
 
 <section class="hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Nerfies: Deformable Neural Radiance Fields</h1>
+          <h1 class="title is-1 publication-title">
+            <span class="corecalib">CoreCalib</span>: Density-Aware Calibration for Resource-Efficient Medical Vision-Language Models
+          </h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="https://keunhong.com">Keunhong Park</a><sup>1</sup>,</span>
+              <a href="https://orcid.org/0009-0009-9507-2392">Tien-Dat Dam</a><sup>1,2</sup>,</span>
             <span class="author-block">
-              <a href="https://utkarshsinha.com">Utkarsh Sinha</a><sup>2</sup>,</span>
+              <a href="https://orcid.org/0009-0003-3984-3355">Huu-Thuan Huynh</a><sup>1,2</sup>,</span>
             <span class="author-block">
-              <a href="https://jonbarron.info">Jonathan T. Barron</a><sup>2</sup>,
-            </span>
+              <a href="https://orcid.org/0000-0003-3046-3041">Minh-Triet Tran</a><sup>1,2</sup>,</span>
             <span class="author-block">
-              <a href="http://sofienbouaziz.com">Sofien Bouaziz</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://www.danbgoldman.com">Dan B Goldman</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://homes.cs.washington.edu/~seitz/">Steven M. Seitz</a><sup>1,2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
+              <a href="https://orcid.org/0000-0002-7363-2610">Trung-Nghia Le</a><sup>1,2,*</sup>
             </span>
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>University of Washington,</span>
-            <span class="author-block"><sup>2</sup>Google Research</span>
+            <span class="author-block"><sup>1</sup>University of Science, Ho Chi Minh City, Vietnam</span>
+            <span class="author-block"><sup>2</sup>Vietnam National University, Ho Chi Minh City, Vietnam</span>
+          </div>
+          <div class="is-size-6 publication-authors corresponding">
+            <span class="author-block"><sup>*</sup>Corresponding author</span>
           </div>
 
           <div class="column has-text-centered">
             <div class="publication-links">
-              <!-- PDF Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/pdf/2011.12948"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
+                <a class="external-link button is-normal is-rounded is-dark" disabled
+                   title="Paper coming soon">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper (coming soon)</span>
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2011.12948"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
+                <a class="external-link button is-normal is-rounded is-dark" disabled
+                   title="Code release coming soon">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Coming soon</span>
                 </a>
               </span>
-              <!-- Video Link. -->
               <span class="link-block">
-                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                <a href="https://huggingface.co/magnusdtd/Medico2026-unsloth-Qwen3.5-4B-QLoRA-SFT"
                    class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
-                  <span>Video</span>
+                  <span class="icon">🤗</span>
+                  <span>Model</span>
                 </a>
               </span>
-              <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/google/nerfies"
+                <a href="https://huggingface.co/datasets/SimulaMet/Kvasir-VQA-x1"
                    class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
+                  <span class="icon"><i class="fas fa-database"></i></span>
+                  <span>Dataset</span>
+                </a>
               </span>
-              <!-- Dataset Link. -->
               <span class="link-block">
-                <a href="https://github.com/google/nerfies/releases/tag/0.1"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="far fa-images"></i>
-                  </span>
-                  <span>Data</span>
-                  </a>
+                <a href="#BibTeX" class="button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-quote-right"></i></span>
+                  <span>BibTeX</span>
+                </a>
+              </span>
             </div>
-
           </div>
         </div>
       </div>
@@ -175,80 +99,48 @@
   </div>
 </section>
 
+<!-- Teaser. -->
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video>
+      <a href="./static/images/fig_overview.jpg">
+        <img src="./static/images/fig_overview.jpg" class="figure-img"
+             alt="Overview of CoreCalib: (A) deployment motivation, (B) the four-stage calibration construction pipeline, (C) plug-and-play use with MASQuant, GPTQ and QIG."/>
+      </a>
       <h2 class="subtitle has-text-centered">
-        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
-        free-viewpoint
-        portraits.
+        <span class="corecalib">CoreCalib</span> builds a 128-pair calibration set from only
+        <b>23 representative endoscopy images</b> and plugs it into existing PTQ methods
+        (MASQuant, GPTQ, QIG) without changing the model or the quantizer.
       </h2>
     </div>
   </div>
 </section>
 
-
+<!-- Highlights. -->
 <section class="hero is-light is-small">
   <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/steve.mp4"
-                    type="video/mp4">
-          </video>
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered highlights">
+        <div class="column">
+          <p class="highlight-number">3 / 3</p>
+          <p>quantizers where CoreCalib gets the best METEOR</p>
         </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/chair-tp.mp4"
-                    type="video/mp4">
-          </video>
+        <div class="column">
+          <p class="highlight-number">0.5672 → 0.6234</p>
+          <p>METEOR with W4A8 MASQuant (COCO → CoreCalib)</p>
         </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/shiba.mp4"
-                    type="video/mp4">
-          </video>
+        <div class="column">
+          <p class="highlight-number">≈ 41%</p>
+          <p>of the METEOR drop relative to BF16 recovered</p>
         </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/fullbody.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
+        <div class="column">
+          <p class="highlight-number">Training-free</p>
+          <p>no change to the fine-tuned model or the quantizer</p>
         </div>
       </div>
     </div>
   </div>
 </section>
-
 
 <section class="section">
   <div class="container is-max-desktop">
@@ -258,210 +150,454 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We present the first method capable of photorealistically reconstructing a non-rigidly
-            deforming scene using photos/videos captured casually from mobile phones.
+            Medical vision-language models (VLMs) show promise for clinical image understanding, but
+            their computational and memory requirements hinder deployment on resource-constrained
+            clinical hardware. Post-training quantization (PTQ) offers a practical compression
+            strategy without retraining, yet its effectiveness depends strongly on the calibration data.
           </p>
           <p>
-            Our approach augments neural radiance fields
-            (NeRF) by optimizing an
-            additional continuous volumetric deformation field that warps each observed point into a
-            canonical 5D NeRF.
-            We observe that these NeRF-like deformation fields are prone to local minima, and
-            propose a coarse-to-fine optimization method for coordinate-based models that allows for
-            more robust optimization.
-            By adapting principles from geometry processing and physical simulation to NeRF-like
-            models, we propose an elastic regularization of the deformation field that further
-            improves robustness.
+            We propose <span class="corecalib">CoreCalib</span>, a training-free and quantizer-agnostic
+            framework for constructing compact calibration sets that preserve the target medical VQA
+            distribution. CoreCalib stratifies data by clinical question class, identifies
+            representative visual modes using frozen DINOv2 features with UMAP and HDBSCAN, and expands
+            selected images into class-balanced question-answer pairs.
           </p>
           <p>
-            We show that <span class="dnerf">Nerfies</span> can turn casually captured selfie
-            photos/videos into deformable NeRF
-            models that allow for photorealistic renderings of the subject from arbitrary
-            viewpoints, which we dub <i>"nerfies"</i>. We evaluate our method by collecting data
-            using a
-            rig with two mobile phones that take time-synchronized photos, yielding train/validation
-            images of the same pose at different viewpoints. We show that our method faithfully
-            reconstructs non-rigidly deforming scenes and reproduces unseen views with high
-            fidelity.
+            On Kvasir-VQA-x1, we evaluate CoreCalib with MASQuant, GPTQ, and QIG using a fixed 128-pair
+            budget. CoreCalib achieves the best METEOR with all three quantizers and the best ROUGE-L
+            with MASQuant and GPTQ. With W4A8 MASQuant, it improves METEOR from 0.5672 with COCO
+            calibration to 0.6234, recovering approximately 41% of the degradation relative to BF16.
+            These results support CoreCalib as a data-centric component for resource-efficient medical
+            VLM deployment.
           </p>
         </div>
       </div>
     </div>
     <!--/ Abstract. -->
-
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-    <!--/ Paper video. -->
   </div>
 </section>
 
-
-<section class="section">
+<!-- Motivation. -->
+<section class="section pt-0">
   <div class="container is-max-desktop">
-
-    <div class="columns is-centered">
-
-      <!-- Visual Effects. -->
-      <div class="column">
-        <div class="content">
-          <h2 class="title is-3">Visual Effects</h2>
-          <p>
-            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
-            would be impossible without nerfies since it would require going through a wall.
-          </p>
-          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/dollyzoom-stacked.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <!--/ Visual Effects. -->
-
-      <!-- Matting. -->
-      <div class="column">
-        <h2 class="title is-3">Matting</h2>
-        <div class="columns is-centered">
-          <div class="column content">
-            <p>
-              As a byproduct of our method, we can also solve the matting problem by ignoring
-              samples that fall outside of a bounding box during rendering.
-            </p>
-            <video id="matting-video" controls playsinline height="100%">
-              <source src="./static/videos/matting.mp4"
-                      type="video/mp4">
-            </video>
-          </div>
-
-        </div>
-      </div>
+    <h2 class="title is-3">Why calibration data matters</h2>
+    <div class="content has-text-justified">
+      <p>
+        Multimodal PTQ methods usually calibrate on a small, generic COCO image-caption set, even when
+        the model has been fine-tuned on a very different clinical distribution. In medical VQA, a
+        calibration example is not just an image: the same endoscopic frame can be asked about
+        abnormality presence, polyp type, instrument count, anatomical landmarks or image quality.
+        A calibration set can therefore look visually representative and still miss the clinical
+        tasks the model must perform, or it can cover frequent question classes while spending its
+        small visual budget on atypical images.
+      </p>
+      <p>
+        Simply switching to random in-domain data is not enough either. Under W4A8 MASQuant, a random
+        in-domain calibration set still leaves a <b>0.0870 METEOR drop</b> relative to the
+        half-precision model. We therefore treat calibration as a <i>multimodal workload-construction</i>
+        problem: under a tiny budget, the set should jointly represent the visual distribution and the
+        clinical question distribution.
+      </p>
     </div>
-    <!--/ Matting. -->
-
-    <!-- Animation. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Animation</h2>
-
-        <!-- Interpolating. -->
-        <h3 class="title is-4">Interpolating states</h3>
-        <div class="content has-text-justified">
-          <p>
-            We can also animate the scene by interpolating the deformation latent codes of two input
-            frames. Use the slider here to linearly interpolate between the left frame and the right
-            frame.
-          </p>
-        </div>
-        <div class="columns is-vcentered interpolation-panel">
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_start.jpg"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-            <p>Start Frame</p>
-          </div>
-          <div class="column interpolation-video-column">
-            <div id="interpolation-image-wrapper">
-              Loading...
-            </div>
-            <input class="slider is-fullwidth is-large is-info"
-                   id="interpolation-slider"
-                   step="1" min="0" max="100" value="0" type="range">
-          </div>
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_end.jpg"
-                 class="interpolation-image"
-                 alt="Interpolation end reference image."/>
-            <p class="is-bold">End Frame</p>
-          </div>
-        </div>
-        <br/>
-        <!--/ Interpolating. -->
-
-        <!-- Re-rendering. -->
-        <h3 class="title is-4">Re-rendering the input video</h3>
-        <div class="content has-text-justified">
-          <p>
-            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
-            viewpoint such as a stabilized camera by playing back the training deformations.
-          </p>
-        </div>
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 controls
-                 muted
-                 preload
-                 playsinline
-                 width="75%">
-            <source src="./static/videos/replay.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <!--/ Re-rendering. -->
-
-      </div>
-    </div>
-    <!--/ Animation. -->
-
-
-    <!-- Concurrent Work. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Related Links</h2>
-
-        <div class="content has-text-justified">
-          <p>
-            There's a lot of excellent work that was introduced around the same time as ours.
-          </p>
-          <p>
-            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
-          </p>
-          <p>
-            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
-            both use deformation fields to model non-rigid scenes.
-          </p>
-          <p>
-            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
-          </p>
-          <p>
-            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Concurrent Work. -->
-
   </div>
 </section>
 
+<!-- Method. -->
+<section class="section pt-0">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Method</h2>
+    <div class="content has-text-justified">
+      <p>
+        Given a medical VQA training set <i>D</i> = {(<i>I</i>, <i>q</i>, <i>a</i>, <i>c</i>)} with
+        images, questions, answers and clinical question classes, CoreCalib constructs a calibration set
+        <i>S</i> = <i>F</i>(<i>D</i>, <i>N</i>) with |<i>S</i>| = <i>N</i>. The construction
+        <i>F</i> is independent of the internal objective of the PTQ algorithm, so the resulting set is
+        passed <b>unchanged</b> to any quantizer. CoreCalib makes three decisions that are usually
+        conflated:
+      </p>
+    </div>
+
+    <div class="columns stage-cards">
+      <div class="column">
+        <div class="box stage stage-1">
+          <p class="stage-step">Stage 1</p>
+          <h3 class="title is-5">Question-class stratification</h3>
+          <p>
+            The 18 clinical question classes of Kvasir-VQA-x1 are used as strata. Strata overlap at
+            the image level, so one representative image can serve several question types.
+          </p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="box stage stage-2">
+          <p class="stage-step">Stage 2</p>
+          <h3 class="title is-5">Density-aware visual core discovery</h3>
+          <p>
+            Within each class, images are embedded with a frozen DINOv2 encoder, reduced with UMAP and
+            clustered with HDBSCAN. Following CoDA, each cluster contributes the real image with the
+            highest membership probability, and post-processing yields exactly <i>K</i> representatives.
+          </p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="box stage stage-3">
+          <p class="stage-step">Stage 3</p>
+          <h3 class="title is-5">QA expansion and class-balanced sampling</h3>
+          <p>
+            Representatives are expanded into all of their QA pairs, and the budget is filled
+            round-robin across classes, so frequent classes cannot consume it. With <i>N</i> = 128,
+            this yields 128 QA pairs from only 23 unique images.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content has-text-justified">
+      <p>
+        We use density-based discovery rather than centroid-based clustering because the budget is
+        small and medical image manifolds can contain non-convex, unevenly populated modes. A K-Means
+        centroid can be geometrically central without corresponding to a representative real image,
+        whereas HDBSCAN retrieves real images from the dense core of each mode.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Results. -->
+<section class="section pt-0">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Results</h2>
+    <div class="content has-text-justified">
+      <p>
+        We quantized Qwen3.5-4B fine-tuned on Kvasir-VQA-x1 with three PTQ methods and evaluated on
+        the full test split (15,955 samples). Every calibration strategy used exactly 128 samples:
+        <b>COCO</b> (ShareGPT4V image-caption pairs, the common generic choice), <b>Random</b>
+        (random images with the same QA expansion and balancing), and <b>K-Means</b> (per-class
+        K-Means on the same DINOv2 features, nearest real image to each centroid). Within each
+        quantizer, the best result is in <b>bold</b> and the second best is <u>underlined</u>.
+      </p>
+    </div>
+
+    <div class="table-container">
+      <table class="table is-fullwidth is-hoverable results-table">
+        <thead>
+          <tr>
+            <th>Quantizer</th>
+            <th>Calibration</th>
+            <th class="has-text-right">BLEU ↑</th>
+            <th class="has-text-right">ROUGE-L ↑</th>
+            <th class="has-text-right">METEOR ↑</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="reference-row">
+            <td colspan="2"><i>Half precision (BF16)</i></td>
+            <td class="has-text-right">0.4964</td>
+            <td class="has-text-right">0.7005</td>
+            <td class="has-text-right">0.7040</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td rowspan="4" class="quantizer">MASQuant<br><span class="has-text-grey">W4A8</span></td>
+            <td>COCO</td>
+            <td class="has-text-right">0.3313</td>
+            <td class="has-text-right">0.5486</td>
+            <td class="has-text-right">0.5672</td>
+          </tr>
+          <tr>
+            <td>Random</td>
+            <td class="has-text-right">0.3827</td>
+            <td class="has-text-right">0.5991</td>
+            <td class="has-text-right"><u>0.6170</u></td>
+          </tr>
+          <tr>
+            <td>K-Means</td>
+            <td class="has-text-right"><b>0.3954</b></td>
+            <td class="has-text-right"><u>0.6063</u></td>
+            <td class="has-text-right"><u>0.6170</u></td>
+          </tr>
+          <tr class="ours-row">
+            <td>CoreCalib (Ours)</td>
+            <td class="has-text-right"><u>0.3943</u></td>
+            <td class="has-text-right"><b>0.6103</b></td>
+            <td class="has-text-right"><b>0.6234</b></td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td rowspan="4" class="quantizer">GPTQ<br><span class="has-text-grey">W4A16</span></td>
+            <td>COCO</td>
+            <td class="has-text-right">0.4172</td>
+            <td class="has-text-right">0.6373</td>
+            <td class="has-text-right">0.6545</td>
+          </tr>
+          <tr>
+            <td>Random</td>
+            <td class="has-text-right"><u>0.4438</u></td>
+            <td class="has-text-right"><u>0.6586</u></td>
+            <td class="has-text-right">0.6625</td>
+          </tr>
+          <tr>
+            <td>K-Means</td>
+            <td class="has-text-right">0.4380</td>
+            <td class="has-text-right">0.6554</td>
+            <td class="has-text-right"><u>0.6642</u></td>
+          </tr>
+          <tr class="ours-row">
+            <td>CoreCalib (Ours)</td>
+            <td class="has-text-right"><b>0.4473</b></td>
+            <td class="has-text-right"><b>0.6608</b></td>
+            <td class="has-text-right"><b>0.6649</b></td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td rowspan="4" class="quantizer">QIG<br><span class="has-text-grey">W4A8</span></td>
+            <td>COCO</td>
+            <td class="has-text-right"><b>0.3099</b></td>
+            <td class="has-text-right">0.5310</td>
+            <td class="has-text-right">0.5513</td>
+          </tr>
+          <tr>
+            <td>Random</td>
+            <td class="has-text-right">0.3041</td>
+            <td class="has-text-right"><b>0.5321</b></td>
+            <td class="has-text-right"><u>0.5565</u></td>
+          </tr>
+          <tr>
+            <td>K-Means</td>
+            <td class="has-text-right">0.3048</td>
+            <td class="has-text-right">0.5235</td>
+            <td class="has-text-right">0.5494</td>
+          </tr>
+          <tr class="ours-row">
+            <td>CoreCalib (Ours)</td>
+            <td class="has-text-right"><u>0.3054</u></td>
+            <td class="has-text-right"><u>0.5313</u></td>
+            <td class="has-text-right"><b>0.5581</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content has-text-justified">
+      <p>
+        Generic COCO calibration caused the largest degradation, and every in-domain strategy recovered
+        a substantial part of it, most notably with MASQuant, where CoreCalib improved METEOR by 0.0562
+        over COCO. CoreCalib achieved the best METEOR with every quantizer and the best ROUGE-L with
+        MASQuant and GPTQ. GPTQ and QIG were less sensitive to the calibration data, which is consistent
+        with how each quantizer uses its calibration inputs: MASQuant and QIG estimate activation
+        statistics, smoothing factors or token-level sensitivities from them, while GPTQ mainly
+        estimates reconstruction statistics.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Qualitative. -->
+<section class="section pt-0">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Qualitative examples</h2>
+    <div class="content has-text-justified">
+      <p>
+        Test examples with MASQuant (W4A8) under different calibration sets. Green answers are
+        consistent with the ground truth; red answers contradict it. With COCO, Random or K-Means
+        calibration, the quantized model denies a visible polyp, miscounts it, or calls a pedunculated
+        polyp sessile or hyperplastic. With CoreCalib, it keeps the finding, the count and the lesion
+        type, matching the half-precision model.
+      </p>
+    </div>
+    <a href="./static/images/fig_qualitative.jpg">
+      <img src="./static/images/fig_qualitative.jpg" class="figure-img qualitative-img"
+           alt="Three Kvasir-VQA-x1 test examples (abnormality presence, polyp count, polyp type) comparing answers from BF16, COCO, Random, K-Means and CoreCalib calibration."/>
+    </a>
+    <p class="has-text-grey is-size-7 has-text-centered mt-2">
+      These examples illustrate clinically meaningful errors after compression; they are not a clinical validation.
+    </p>
+  </div>
+</section>
+
+<!-- Ablation. -->
+<section class="section pt-0">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Ablation study</h2>
+    <div class="columns is-multiline">
+      <div class="column is-full">
+        <h3 class="title is-5">Components (MASQuant W4A8)</h3>
+        <div class="table-container">
+          <table class="table is-fullwidth is-hoverable is-narrow results-table">
+            <thead>
+              <tr>
+                <th>Variant</th>
+                <th class="has-text-centered">Strat.</th>
+                <th class="has-text-centered">Discovery</th>
+                <th class="has-text-centered">Rank</th>
+                <th class="has-text-right">BLEU ↑</th>
+                <th class="has-text-right">ROUGE-L ↑</th>
+                <th class="has-text-right">METEOR ↑</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Random</td>
+                <td class="has-text-centered">✓</td>
+                <td class="has-text-centered">–</td>
+                <td class="has-text-centered">–</td>
+                <td class="has-text-right">0.3827</td>
+                <td class="has-text-right">0.5991</td>
+                <td class="has-text-right">0.6170</td>
+              </tr>
+              <tr>
+                <td>K-Means</td>
+                <td class="has-text-centered">✓</td>
+                <td class="has-text-centered">K-Means</td>
+                <td class="has-text-centered">1st</td>
+                <td class="has-text-right"><u>0.3954</u></td>
+                <td class="has-text-right"><u>0.6063</u></td>
+                <td class="has-text-right">0.6170</td>
+              </tr>
+              <tr>
+                <td>w/o stratification</td>
+                <td class="has-text-centered">✗</td>
+                <td class="has-text-centered">HDBSCAN</td>
+                <td class="has-text-centered">1st</td>
+                <td class="has-text-right">0.3905</td>
+                <td class="has-text-right">0.6029</td>
+                <td class="has-text-right"><u>0.6190</u></td>
+              </tr>
+              <tr>
+                <td>2nd member</td>
+                <td class="has-text-centered">✓</td>
+                <td class="has-text-centered">HDBSCAN</td>
+                <td class="has-text-centered">2nd</td>
+                <td class="has-text-right"><b>0.4002</b></td>
+                <td class="has-text-right">0.6014</td>
+                <td class="has-text-right">0.6173</td>
+              </tr>
+              <tr class="ours-row">
+                <td>CoreCalib</td>
+                <td class="has-text-centered">✓</td>
+                <td class="has-text-centered">HDBSCAN</td>
+                <td class="has-text-centered">1st</td>
+                <td class="has-text-right">0.3943</td>
+                <td class="has-text-right"><b>0.6103</b></td>
+                <td class="has-text-right"><b>0.6234</b></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="column is-8 is-offset-2">
+        <h3 class="title is-5">Calibration budget <i>N</i></h3>
+        <div class="table-container">
+          <table class="table is-fullwidth is-hoverable is-narrow results-table">
+            <thead>
+              <tr>
+                <th class="has-text-centered"><i>N</i></th>
+                <th class="has-text-centered">#Images</th>
+                <th class="has-text-right">BLEU ↑</th>
+                <th class="has-text-right">ROUGE-L ↑</th>
+                <th class="has-text-right">METEOR ↑</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="has-text-centered">32</td>
+                <td class="has-text-centered">12</td>
+                <td class="has-text-right">0.3851</td>
+                <td class="has-text-right">0.6054</td>
+                <td class="has-text-right">0.6184</td>
+              </tr>
+              <tr>
+                <td class="has-text-centered">64</td>
+                <td class="has-text-centered">16</td>
+                <td class="has-text-right">0.3891</td>
+                <td class="has-text-right">0.6066</td>
+                <td class="has-text-right"><b>0.6326</b></td>
+              </tr>
+              <tr class="ours-row">
+                <td class="has-text-centered">128</td>
+                <td class="has-text-centered">23</td>
+                <td class="has-text-right"><u>0.3943</u></td>
+                <td class="has-text-right"><u>0.6103</u></td>
+                <td class="has-text-right">0.6234</td>
+              </tr>
+              <tr>
+                <td class="has-text-centered">256</td>
+                <td class="has-text-centered">35</td>
+                <td class="has-text-right"><b>0.3962</b></td>
+                <td class="has-text-right"><b>0.6155</b></td>
+                <td class="has-text-right"><u>0.6277</u></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="content has-text-justified">
+      <p>
+        Replacing density-based discovery with Random or K-Means selection reduced ROUGE-L and METEOR,
+        so the gain is not explained by the DINOv2 feature space alone. Removing question-class
+        stratification also lowered performance, which supports covering heterogeneous clinical tasks
+        explicitly. Using the second-most-confident cluster member raised BLEU but lowered ROUGE-L and
+        METEOR, suggesting that images closest to the density core are preferable. For the budget,
+        BLEU and ROUGE-L grew from 32 to 256 samples while METEOR was non-monotonic: a larger
+        calibration set does not guarantee uniformly better capability retention.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Setup. -->
+<section class="section pt-0">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Setup</h2>
+    <div class="content">
+      <ul>
+        <li><b>Model:</b> Qwen3.5-4B fine-tuned on Kvasir-VQA-x1 with QLoRA (rank 16, α = 32), released as
+          <a href="https://huggingface.co/magnusdtd/Medico2026-unsloth-Qwen3.5-4B-QLoRA-SFT">Medico2026-unsloth-Qwen3.5-4B-QLoRA-SFT</a>.</li>
+        <li><b>Quantizers:</b> MASQuant (W4A8), GPTQ (W4A16, group size 128), QIG (W4A8), all with their official implementations.</li>
+        <li><b>CoreCalib:</b> DINOv2 ViT-B/14 features; UMAP with 50 neighbors, 50 dimensions, min. distance 0; HDBSCAN with min. cluster size 25 and 3 min. samples; <i>K</i> = 10 representatives per class.</li>
+        <li><b>Data:</b> Kvasir-VQA-x1, 159,549 QA pairs on 6,500 GI endoscopy images and 18 question classes. Calibration used the training split only; evaluation used the full test split.</li>
+        <li><b>Hardware:</b> NVIDIA A100 40GB GPUs.</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{park2021nerfies,
-  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
-  title     = {Nerfies: Deformable Neural Radiance Fields},
-  journal   = {ICCV},
-  year      = {2021},
+    <div class="bibtex-wrapper">
+      <button class="button is-small is-light copy-bibtex" type="button" aria-label="Copy BibTeX">
+        <span class="icon is-small"><i class="far fa-copy"></i></span>
+        <span class="copy-label">Copy</span>
+      </button>
+      <pre><code id="bibtex">@inproceedings{dam2026corecalib,
+  author    = {Dam, Tien-Dat and Huynh, Huu-Thuan and Tran, Minh-Triet and Le, Trung-Nghia},
+  title     = {Density-Aware Calibration for Resource-Efficient Medical Vision-Language Models},
+  booktitle = {International Symposium on Information and Communication Technology (SOICT)},
+  year      = {2026},
 }</code></pre>
+    </div>
   </div>
 </section>
 
+<section class="section pt-0">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-4">Acknowledgement</h2>
+    <p>
+      This research is funded by Vietnam National University - Ho Chi Minh City (VNU-HCM) under Grant
+      Number A2025-18-04.
+    </p>
+  </div>
+</section>
 
 <footer class="footer">
   <div class="container">
     <div class="content has-text-centered">
-      <a class="icon-link"
-         href="./static/videos/nerfies_paper.pdf">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+      <a class="icon-link" href="https://github.com/magnusdtd" aria-label="GitHub">
         <i class="fab fa-github"></i>
       </a>
     </div>
@@ -474,11 +610,7 @@
             Commons Attribution-ShareAlike 4.0 International License</a>.
           </p>
           <p>
-            This means you are free to borrow the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
+            The page template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
           </p>
         </div>
       </div>

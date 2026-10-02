@@ -155,3 +155,107 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
+
+
+/* CoreCalib additions. */
+
+.corecalib {
+  font-variant: small-caps;
+  font-weight: bold;
+}
+
+.corresponding {
+  color: #777;
+}
+
+.figure-img {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #e5e5e5;
+}
+
+.teaser .subtitle {
+  margin-top: 1rem;
+}
+
+.qualitative-img {
+  display: block;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.highlights p {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.highlight-number {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: hsl(204, 86%, 40%);
+  margin-bottom: 0.25rem;
+}
+
+.stage-cards {
+  margin-bottom: 1rem;
+}
+
+.stage {
+  height: 100%;
+  border-top: 4px solid;
+}
+
+.stage-1 { border-top-color: #2f6db5; }
+.stage-2 { border-top-color: #2e8b57; }
+.stage-3 { border-top-color: #d4a017; }
+
+.stage-step {
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 0.25rem;
+}
+
+.stage .title {
+  font-family: 'Google Sans', sans-serif;
+  margin-bottom: 0.5rem;
+}
+
+.results-table td,
+.results-table th {
+  font-variant-numeric: tabular-nums;
+  vertical-align: middle;
+}
+
+.results-table tbody + tbody {
+  border-top: 2px solid #dbdbdb;
+}
+
+.results-table .quantizer {
+  font-weight: bold;
+}
+
+.results-table .reference-row {
+  background: #fafafa;
+}
+
+.results-table .ours-row {
+  background: #eef4fb;
+}
+
+.bibtex-wrapper {
+  position: relative;
+}
+
+.copy-bibtex {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .publication-title.is-1 {
+    font-size: 2rem;
+  }
+}
