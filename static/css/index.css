@@ -159,11 +159,6 @@ body {
 
 /* CoreCalib additions. */
 
-.corecalib {
-  font-variant: small-caps;
-  font-weight: bold;
-}
-
 .corresponding {
   color: #777;
 }
