@@ -1,1 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1f5fa8"/><text x="32" y="43" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="#fff" text-anchor="middle">CC</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" rx="180" fill="#ffffff"/>
+  <circle cx="512" cy="512" r="410" fill="none" stroke="#1f5fa8" stroke-width="64"/>
+  <circle cx="512" cy="512" r="112" fill="none" stroke="#1f5fa8" stroke-width="34"/>
+  <circle cx="512" cy="512" r="54" fill="#1f5fa8"/>
+  <g fill="#1f5fa8">
+    <circle cx="500" cy="262" r="46"/>
+    <circle cx="282" cy="452" r="46"/>
+    <circle cx="742" cy="572" r="46"/>
+    <circle cx="452" cy="760" r="46"/>
+  </g>
+  <g fill="#2e8b57">
+    <circle cx="700" cy="330" r="46"/>
+    <circle cx="300" cy="660" r="46"/>
+  </g>
+  <g fill="#e07b39">
+    <circle cx="660" cy="752" r="46"/>
+    <circle cx="330" cy="290" r="40"/>
+  </g>
+</svg>
