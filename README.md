@@ -2,6 +2,8 @@
 
 Project page for **Density-Aware Calibration for Resource-Efficient Medical Vision-Language Models** (SOICT 2026).
 
+Paper: [arXiv:2611.00684](https://arxiv.org/abs/2611.00684)
+
 Preview locally with `python3 -m http.server` and open http://localhost:8000.
 
 # Website License
